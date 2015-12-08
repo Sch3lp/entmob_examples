@@ -1,0 +1,29 @@
+{
+    "datasetid":"striproute0",
+    "recordid":"47f672e183c74c044f71034647b6438b935b0b4d",
+    "fields":{
+        "auteur_s":"Marini",
+        "photo":{
+            "format":"JPEG",
+            "thumbnail":true,
+            "height":3567,
+            "width":2386,
+            "filename":"scorpion.jpg",
+            "id":"708e00056b3f0b67314a90bb527e678d"
+        },
+        "personnage_s":"Le Scorpion",
+        "coordonnees_geographiques":[
+            50.8477626262,
+            4.3621301651
+        ],
+        "annee":"2002"
+    },
+    "geometry":{
+        "type":"Point",
+        "coordinates":[
+            4.3621301651,
+            50.8477626262
+        ]
+    },
+    "record_timestamp":"2015-12-01T10:33:14+00:00"
+}
