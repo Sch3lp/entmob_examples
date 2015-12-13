@@ -17,16 +17,16 @@ public class RouteAssemblerTest {
 
     @Test
     public void assemble_DefaultStripRoute_RouteWordtVolledigIngevuld() throws Exception {
-        //TODO Schrijf hier testcode die een StripRoute aanmaakt, dat meegeeft aan de assembler, en assertions
+        //TODO Schrijf hier testcode die een StripRoute aanmaakt, deze meegeeft aan de assembler, en assertions
     }
 
     @Test
     public void assemble_StripRouteZonderJaar_RouteHeeftGeenJaar() throws Exception {
-        //TODO Schrijf hier testcode die een StripRoute aanmaakt, dat meegeeft aan de assembler, en assertions
+        //TODO Schrijf hier testcode die een StripRoute aanmaakt, deze meegeeft aan de assembler, en assertions
     }
 
     @Test
     public void assemble_StripRouteZonderCoordinaten_KunnenWeGeenRouteMeeAanmaken() throws Exception {
-        //TODO Schrijf hier testcode die een StripRoute aanmaakt, dat meegeeft aan de assembler, en assertions
+        //TODO Schrijf hier testcode die een StripRoute aanmaakt, deze meegeeft aan de assembler, en assertions
     }
 }
