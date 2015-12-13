@@ -9,19 +9,19 @@ import java.util.List;
 @RestController
 public class MemorableQuotesController {
 
-    private static final List<String> quotes;
+    private static final List<Quote> quotes;
 
     static {
         quotes = new ArrayList<>();
-        quotes.add("War...War never changes"); // Narrator
-        quotes.add("They asked me how well I understood theoretical physics. I said I had a theoretical degree in physics. They said welcome aboard"); // Mr. Fantastic
-        quotes.add("Freedom is the sovereign right of every American"); // Liberty Prime
-        quotes.add("Too many people have opnions on things they know nothing about. And the more ignorant they are, the more opinions they have"); // Thomas Hildern
-        quotes.add("Here, take a few radiation chems, as my little way of saying, \"I'm sorry I twisted your DNA like a kitten with a ball of yarn.\""); // Moira Brown
+        quotes.add(Quote.of(" Narrator", "War...War never changes"));
+        quotes.add(Quote.of(" Mr. Fantastic", "They asked me how well I understood theoretical physics. I said I had a theoretical degree in physics. They said welcome aboard"));
+        quotes.add(Quote.of(" Liberty Prime","Freedom is the sovereign right of every American"));
+        quotes.add(Quote.of(" Thomas Hildern","Too many people have opnions on things they know nothing about. And the more ignorant they are, the more opinions they have"));
+        quotes.add(Quote.of("Moira Brown", "Here, take a few radiation chems, as my little way of saying, \"I'm sorry I twisted your DNA like a kitten with a ball of yarn.\""));
     }
 
     @RequestMapping("/")
-    public List<String> all(){
+    public List<Quote> all(){
         return quotes;
     }
 }
