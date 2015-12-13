@@ -41,4 +41,5 @@ dependencies {
         exclude module: "spring-boot-starter-tomcat"
     }
     compile("org.springframework.boot:spring-boot-starter-jetty")
+    testCompile ("org.springframework:spring-boot-starter-test")
 }
