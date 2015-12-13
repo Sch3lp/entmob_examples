@@ -15,6 +15,4 @@ public class Raiders {
         return raiders.size();
     }
 
-    private class Raider {
-    }
 }
