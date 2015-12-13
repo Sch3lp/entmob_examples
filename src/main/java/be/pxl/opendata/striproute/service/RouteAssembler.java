@@ -5,7 +5,7 @@ import be.pxl.opendata.striproute.domain.Route;
 import be.pxl.opendata.striproute.transfer.StripRoute;
 
 /**
- * Transforms incoming (marshalled) JSON to our own Domain that makes sense for us
+ * Transforms incoming (unmarshalled) JSON to our own Domain that makes sense for us
  */
 public class RouteAssembler {
 
