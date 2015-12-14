@@ -42,4 +42,6 @@ dependencies {
     }
     compile("org.springframework.boot:spring-boot-starter-jetty")
     testCompile ("org.springframework:spring-boot-starter-test")
+
+    compile("com.jayway.jsonpath:json-path:2.1.0")
 }
