@@ -6,15 +6,22 @@ import java.util.List;
 public class Raiders {
 
     private List<Raider> raiders = new ArrayList<>();
+    private boolean hasLegendary;
+
+    public Raiders(boolean hasLegendary) {
+        this.hasLegendary = hasLegendary;
+    }
 
     public void addAttacker(Raider raider){
         raiders.add(raider);
     }
 
-    public int getAmountOfRaiders() {
-        return raiders.size();
+    public boolean hasLegendary(){
+        return hasLegendary;
     }
 
-    private class Raider {
+    public int getAmountOfRaiders() {
+        return hasLegendary ? raiders.size() + 1 : raiders.size();
     }
+
 }
