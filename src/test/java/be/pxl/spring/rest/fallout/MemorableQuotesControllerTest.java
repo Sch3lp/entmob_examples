@@ -59,8 +59,8 @@ public class MemorableQuotesControllerTest {
     public void all_ListsAllQuotes() throws Exception {
         mockMvc.perform(get(MemorableQuotesController.QUOTE_BASE_URL))
                 .andExpect(status().isOk())
-//                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(content().json(asJson(Quote.of("Narrator", "War...War never changes"))));
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(content().json(asJson(Arrays.asList(Quote.of("Narrator", "War...War never changes")))));
     }
 
     protected String asJson(Object o) throws IOException {
