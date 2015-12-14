@@ -6,3 +6,8 @@ See the different branches to check out the different approaches to some problem
 
 ## How to run in your IDE
 In `build.gradle` I included the `idea` and `eclipse` plugins, so all there is to it is `./gradlew eclipse` or `./gradlew idea` or `./gradlew.bat ...` if you're on windows.
+
+## More examples of SpringBoot
+[https://spring.io/guides/gs/spring-boot/](https://spring.io/guides/gs/spring-boot/)
+
+[https://spring.io/guides/tutorials/bookmarks/](https://spring.io/guides/tutorials/bookmarks/)
