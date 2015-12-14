@@ -68,6 +68,11 @@ hs_err_pid*
 # IntelliJ
 /out/
 
+# Eclipse
+.classpath
+.project
+.settings
+
 # mpeltonen/sbt-idea plugin
 .idea_modules/
 
