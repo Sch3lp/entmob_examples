@@ -16,14 +16,17 @@ public class SettlementTest {
 
     @Test
     public void settlement_WhenMoreSettlersAssignedToDefenseThanAmountOfRaiders_CanDefendItself() throws Exception {
-        Raiders raiders = new Raiders(true);
-        raiders.addAttacker(new Raider());
+        Raiders raiders = mock(Raiders.class);
+        when(raiders.getAmountOfRaiders()).thenReturn(1);
 
-        Settler defender = new Settler(true);
-        Settler farmer = new Settler(false);
-        Settler clerk = new Settler(false);
+        Settler defender = mock(Settler.class);
+        Settler farmer = mock(Settler.class);
+        Settler clerk = mock(Settler.class);
 
         List<Settler> settlers = Arrays.asList(defender, farmer, clerk);
+        when(defender.isAssignedToDefense()).thenReturn(true);
+        when(farmer.isAssignedToDefense()).thenReturn(false);
+        when(clerk.isAssignedToDefense()).thenReturn(false);
 
         Settlement settlement = new Settlement(settlers);
 
