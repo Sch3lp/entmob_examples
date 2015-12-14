@@ -1,19 +1,19 @@
 package be.pxl.opendata.striproute.domain;
 
 public class Geometry {
-    private long longitude;
-    private long latitude;
+    private Long longitude;
+    private Long latitude;
 
-    public Geometry(long longitude, long latitude) {
+    public Geometry(Long longitude, Long latitude) {
         this.longitude = longitude;
         this.latitude = latitude;
     }
 
-    public long getLongitude() {
+    public Long getLongitude() {
         return longitude;
     }
 
-    public long getLatitude() {
+    public Long getLatitude() {
         return latitude;
     }
 }
