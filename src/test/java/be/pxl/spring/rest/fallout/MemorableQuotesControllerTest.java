@@ -18,11 +18,11 @@ import org.springframework.web.context.WebApplicationContext;
 import java.io.IOException;
 import java.util.Arrays;
 
+import static be.pxl.spring.rest.fallout.MemorableQuotesController.QUOTE_BASE_URL;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(Application.class)
@@ -57,10 +57,20 @@ public class MemorableQuotesControllerTest {
     @Test
     public void query_ListsOnlyQuotesByAuthor() throws Exception {
         String author = "Narrator";
-        mockMvc.perform(get(MemorableQuotesController.QUOTE_BASE_URL).param("author", author))
+        mockMvc.perform(get(QUOTE_BASE_URL).param("author", author))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(content().json(asJson(Arrays.asList(Quote.of(author, "War...War never changes")))));
+    }
+
+    @Test
+    public void create_StoresNewQuoteInList() throws Exception {
+        Quote newQuote = Quote.of("Tim", "Education...Education never changes");
+        String response = mockMvc.perform(post(QUOTE_BASE_URL).contentType(MediaType.APPLICATION_JSON_UTF8).content(asJson(newQuote)))
+                .andExpect(status().isCreated())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andReturn().getResponse().getContentAsString();
+        assertThat(response).isEqualTo(asJson(newQuote));
     }
 
     protected String asJson(Object o) throws IOException {

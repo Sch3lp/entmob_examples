@@ -1,9 +1,9 @@
 package be.pxl.spring.rest.fallout;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,13 +24,19 @@ public class MemorableQuotesController {
         quotes.add(Quote.of("Moira Brown", "Here, take a few radiation chems, as my little way of saying, \"I'm sorry I twisted your DNA like a kitten with a ball of yarn.\""));
     }
 
-    @RequestMapping
+    @RequestMapping(method = RequestMethod.GET)
     public List<Quote> all(){
         return quotes;
     }
 
-    @RequestMapping(params = {"author"})
+    @RequestMapping(params = {"author"}, method = RequestMethod.GET)
     public List<Quote> queried(@RequestParam("author") String author){
         return quotes.stream().filter(q -> author.equals(q.getAuthor())).collect(Collectors.toList());
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity<Quote> create(@RequestBody Quote newQuote) {
+        quotes.add(newQuote);
+        return ResponseEntity.created(URI.create(QUOTE_BASE_URL+"/"+newQuote.getId())).body(newQuote);
     }
 }
