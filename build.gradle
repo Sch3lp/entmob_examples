@@ -30,12 +30,7 @@ jar {
 dependencies {
     def springVersion = '4.2.3.RELEASE'
 
-    testCompile ("junit:junit:4.11")
-    testCompile ("org.assertj:assertj-core:3.2.0")
-    testCompile ("org.mockito:mockito-core:2.0.31-beta")
-    testCompile ("org.springframework:spring-test:$springVersion")
-
-    compile ("org.springframework:spring-context:$springVersion")
+    compile("org.springframework:spring-context:$springVersion")
 
     // Use Jetty instead of default embedded Tomcat
     // No version declared, taken from buildscript dependency
@@ -43,8 +38,12 @@ dependencies {
         exclude module: "spring-boot-starter-tomcat"
     }
     compile("org.springframework.boot:spring-boot-starter-jetty")
-//    testCompile ("org.springframework:spring-boot-starter-test")
 
-    compile("org.skyscreamer:jsonassert:1.2.3")
+    compile("org.springframework.boot:spring-boot-starter-security")
 
+    testCompile("junit:junit:4.11")
+    testCompile("org.assertj:assertj-core:3.2.0")
+    testCompile("org.mockito:mockito-core:2.0.31-beta")
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+    testCompile("org.skyscreamer:jsonassert:1.2.3")
 }
