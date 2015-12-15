@@ -52,21 +52,20 @@ public class MemorableQuotesControllerTest {
     @Before
     public void setUp() throws Exception {
         mockMvc = MockMvcBuilders.webAppContextSetup(webAppContext).build();
-
     }
 
     @Test
-    public void all_ListsAllQuotes() throws Exception {
-        mockMvc.perform(get(MemorableQuotesController.QUOTE_BASE_URL))
+    public void query_ListsOnlyQuotesByAuthor() throws Exception {
+        String author = "Narrator";
+        mockMvc.perform(get(MemorableQuotesController.QUOTE_BASE_URL).param("author", author))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(content().json(asJson(Arrays.asList(Quote.of("Narrator", "War...War never changes")))));
+                .andExpect(content().json(asJson(Arrays.asList(Quote.of(author, "War...War never changes")))));
     }
 
     protected String asJson(Object o) throws IOException {
         MockHttpOutputMessage mockHttpOutputMessage = new MockHttpOutputMessage();
-        this.mappingJackson2HttpMessageConverter.write(
-                o, MediaType.APPLICATION_JSON, mockHttpOutputMessage);
+        this.mappingJackson2HttpMessageConverter.write(o, MediaType.APPLICATION_JSON, mockHttpOutputMessage);
         return mockHttpOutputMessage.getBodyAsString();
     }
 }
