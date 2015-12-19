@@ -42,8 +42,11 @@ public class MemorableQuotesControllerIntegrationTest {
 
     @Autowired
     void setConverters(HttpMessageConverter<?>[] converters) {
-        mappingJackson2HttpMessageConverter = Arrays.asList(converters).stream().filter(
-                hmc -> hmc instanceof MappingJackson2HttpMessageConverter).findAny().get();
+        mappingJackson2HttpMessageConverter = Arrays.asList(converters)
+                .stream()
+                .filter(hmc -> hmc instanceof MappingJackson2HttpMessageConverter)
+                .findAny()
+                .get();
 
         assertThat(mappingJackson2HttpMessageConverter)
                 .isNotNull()
@@ -57,6 +60,7 @@ public class MemorableQuotesControllerIntegrationTest {
 
     @Test
     public void all_ListsAllTheQuotes() throws Exception {
+        //TODO persist expected quotes
         mockMvc.perform(get(MemorableQuotesController.QUOTE_BASE_URL))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
