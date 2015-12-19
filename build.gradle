@@ -7,6 +7,9 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:1.3.0.RELEASE")
+        // necessary if you want to run flyway migrations or repairs or ... with the plugin for gradle
+        classpath 'org.flywaydb:flyway-gradle-plugin:3.2.1'
+        classpath 'org.postgresql:postgresql:9.4-1206-jdbc42'
     }
 }
 
@@ -14,6 +17,7 @@ apply plugin: 'java'
 apply plugin: 'spring-boot'
 apply plugin: 'idea'
 apply plugin: 'eclipse'
+apply plugin: 'org.flywaydb.flyway'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -25,6 +29,12 @@ repositories {
 jar {
     baseName = 'entmob-example'
     version = project.version
+}
+
+// Execute flyway migrations using the gradle plugin
+flyway {
+ url = 'jdbc:postgresql://192.168.99.100:5432/postgres'
+ user = 'postgres'
 }
 
 dependencies {
@@ -40,6 +50,10 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-jetty")
 
     compile("org.springframework.boot:spring-boot-starter-security")
+
+    compile("org.springframework.boot:spring-boot-starter-data-jpa")
+    compile("org.flywaydb:flyway-core")
+    compile("org.postgresql:postgresql:9.4-1206-jdbc42")
 
     testCompile("junit:junit:4.11")
     testCompile("org.assertj:assertj-core:3.2.0")

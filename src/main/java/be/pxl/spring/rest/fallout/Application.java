@@ -1,10 +1,9 @@
 package be.pxl.spring.rest.fallout;
 
+import be.pxl.spring.rest.fallout.quote.QuoteAssembler;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ApplicationContext;
-
-import java.util.stream.Stream;
+import org.springframework.context.annotation.Bean;
 
 /*
  * Automagic uber shorthand for:
@@ -16,10 +15,12 @@ import java.util.stream.Stream;
 @SpringBootApplication
 public class Application {
 
-    public static void main(String[] args) {
-        ApplicationContext ctx = SpringApplication.run(Application.class, args);
+    @Bean
+    public QuoteAssembler quoteAssembler() {
+        return new QuoteAssembler();
+    }
 
-        // Log Beans provided by SpringBoot
-        Stream.of(ctx.getBeanDefinitionNames()).sorted().forEach(System.out::println);
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
     }
 }

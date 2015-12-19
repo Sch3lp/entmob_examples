@@ -11,3 +11,38 @@ In `build.gradle` I included the `idea` and `eclipse` plugins, so all there is t
 [https://spring.io/guides/gs/spring-boot/](https://spring.io/guides/gs/spring-boot/)
 
 [https://spring.io/guides/tutorials/bookmarks/](https://spring.io/guides/tutorials/bookmarks/)
+
+## Docker stuff
+If you're not on Linux [install Docker-Toolbox](https://www.docker.com/docker-toolbox).
+
+Check which ip your docker VM is running on with `docker-machine ip default`.
+
+Run `docker-compose run` to spin up a PostgreSQL database instance.
+
+You can then use this as your jdbc url `jdbc:postgresql://<your vm's ip>:5432/postgres` in your application or tests.
+
+More info on [Postgres' DockerHub page](https://hub.docker.com/_/postgres/).
+
+### Network timed out while trying to connect to ...
+```
+docker-machine restart default      # Restart the environment
+`$(docker-machine env default)`     # Refresh your environment settings
+```
+
+## FlyWay
+[FlyWay](http://flywaydb.org/) makes sure your database tables are up to date and uses simple convention over configuration to manage your versioned SQL scripts.
+
+### Ways to use FlyWay
+* Using the [spring-boot plugin](http://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#howto-execute-flyway-database-migrations-on-startup)
+* Using the [gradle plugin](http://flywaydb.org/documentation/gradle/)
+
+### Validate failed. Migration Checksum mismatch for migration 1
+```
+Validate failed. Migration Checksum mismatch for migration 1
+-> Applied to database : 812944198
+-> Resolved locally    : -1906377092
+```
+
+This means you most probably changed a sql file after it was already executed.
+
+Either fix this by running `./gradlew flywayRepair` if you're still testing out your script, or create a new migration script that only has the change necessary.

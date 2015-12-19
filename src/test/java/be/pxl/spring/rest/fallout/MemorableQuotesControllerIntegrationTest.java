@@ -1,5 +1,7 @@
 package be.pxl.spring.rest.fallout;
 
+import be.pxl.spring.rest.fallout.quote.MemorableQuotesController;
+import be.pxl.spring.rest.fallout.quote.QuoteR;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,6 +19,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -27,15 +30,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(Application.class)
 @WebAppConfiguration
-public class MemorableQuotesControllerTest {
+public class MemorableQuotesControllerIntegrationTest {
 
     // Spring-test utility class that queries Spring's DispatcherServlet to assert
     private MockMvc mockMvc;
 
     private HttpMessageConverter mappingJackson2HttpMessageConverter;
 
-    @Autowired
-    private MemorableQuotesController ctrlr;
     @Autowired
     private WebApplicationContext webAppContext;
 
@@ -55,12 +56,19 @@ public class MemorableQuotesControllerTest {
     }
 
     @Test
+    public void all_ListsAllTheQuotes() throws Exception {
+        mockMvc.perform(get(MemorableQuotesController.QUOTE_BASE_URL))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
+    }
+
+    @Test
     public void query_ListsOnlyQuotesByAuthor() throws Exception {
         String author = "Narrator";
         mockMvc.perform(get(MemorableQuotesController.QUOTE_BASE_URL).param("author", author))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(content().json(asJson(Arrays.asList(Quote.of(author, "War...War never changes")))));
+                .andExpect(content().json(asJson(Arrays.asList(QuoteR.of("1", author, "War...War never changes")))));
     }
 
     protected String asJson(Object o) throws IOException {

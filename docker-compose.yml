@@ -1,0 +1,4 @@
+db:
+  image: postgres
+  ports:
+    - "0.0.0.0:5432:5432"
