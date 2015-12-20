@@ -1,0 +1,9 @@
+POST http://localhost:8080/quote
+Authorization: Basic dXNlcjpwYXNzd29yZA==
+Content-Type: application/json;UTF8
+Accept: application/json;UTF8
+POST_BODY:
+{
+"author": "Tim",
+"quote": "TestQuote"
+}
