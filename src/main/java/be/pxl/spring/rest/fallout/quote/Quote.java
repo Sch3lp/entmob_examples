@@ -10,6 +10,11 @@ import java.util.UUID;
 @Table(name = "QUOTES")
 public class Quote {
 
+    /*
+     * "uuid" uses hex string value as generated UUID
+     * "uuid2" uses java.util.UUID, 16byte array, or hex string value
+     * See https://dzone.com/articles/hibernate-and-uuid-identifiers
+     */
     @Id
     @GenericGenerator(name = "uuid-gen", strategy = "uuid2")
     @GeneratedValue(generator = "uuid-gen")
