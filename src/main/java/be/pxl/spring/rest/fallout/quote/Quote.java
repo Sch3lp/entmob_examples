@@ -11,9 +11,9 @@ import java.util.UUID;
 public class Quote {
 
     @Id
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid")
-    @Type(type = "org.hibernate.type.PostgresUUIDType")
+    @GenericGenerator(name = "uuid-gen", strategy = "uuid2")
+    @GeneratedValue(generator = "uuid-gen")
+    @Type(type = "pg-uuid")
     private UUID id;
     private String author;
     private String quotation;

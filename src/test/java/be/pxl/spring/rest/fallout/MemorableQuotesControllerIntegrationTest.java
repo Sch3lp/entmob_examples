@@ -1,7 +1,6 @@
 package be.pxl.spring.rest.fallout;
 
-import be.pxl.spring.rest.fallout.quote.MemorableQuotesController;
-import be.pxl.spring.rest.fallout.quote.QuoteR;
+import be.pxl.spring.rest.fallout.quote.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.mock.http.MockHttpOutputMessage;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
@@ -21,6 +21,8 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.UUID;
 
+import static be.pxl.spring.rest.fallout.quote.QuoteTestBuilder.aDefaultQuote;
+import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -36,6 +38,9 @@ public class MemorableQuotesControllerIntegrationTest {
     private MockMvc mockMvc;
 
     private HttpMessageConverter mappingJackson2HttpMessageConverter;
+
+    @Autowired
+    public QuoteRepository quoteRepository;
 
     @Autowired
     private WebApplicationContext webAppContext;
@@ -60,10 +65,15 @@ public class MemorableQuotesControllerIntegrationTest {
 
     @Test
     public void all_ListsAllTheQuotes() throws Exception {
-        //TODO persist expected quotes
+        Quote quote = aDefaultQuote().build();
+        UUID persistedUUID = quoteRepository.save(quote).getId();
+
         mockMvc.perform(get(MemorableQuotesController.QUOTE_BASE_URL))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(content().json(asJson(singletonList(QuoteR.of(persistedUUID.toString(), QuoteTestBuilder.AUTHOR, QuoteTestBuilder.QUOTATION)))));
+        System.out.println("listing the quotes");
+        quoteRepository.findAll().stream().map(q -> String.format("%s %s %s", q.getId(), q.getAuthor(), q.getQuotation())).forEach(System.out::println);
     }
 
     @Test
@@ -72,7 +82,7 @@ public class MemorableQuotesControllerIntegrationTest {
         mockMvc.perform(get(MemorableQuotesController.QUOTE_BASE_URL).param("author", author))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(content().json(asJson(Arrays.asList(QuoteR.of("1", author, "War...War never changes")))));
+                .andExpect(content().json(asJson(singletonList(QuoteR.of("1", author, "War...War never changes")))));
     }
 
     protected String asJson(Object o) throws IOException {
