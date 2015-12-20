@@ -72,8 +72,6 @@ public class MemorableQuotesControllerIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(content().json(asJson(singletonList(QuoteR.of(persistedUUID.toString(), QuoteTestBuilder.AUTHOR, QuoteTestBuilder.QUOTATION)))));
-        System.out.println("listing the quotes");
-        quoteRepository.findAll().stream().map(q -> String.format("%s %s %s", q.getId(), q.getAuthor(), q.getQuotation())).forEach(System.out::println);
     }
 
     @Test
