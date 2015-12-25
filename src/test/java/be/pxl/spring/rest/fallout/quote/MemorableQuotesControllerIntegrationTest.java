@@ -1,5 +1,6 @@
-package be.pxl.spring.rest.fallout;
+package be.pxl.spring.rest.fallout.quote;
 
+import be.pxl.spring.rest.fallout.Application;
 import be.pxl.spring.rest.fallout.quote.*;
 import org.junit.Before;
 import org.junit.Test;
