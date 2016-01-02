@@ -72,14 +72,26 @@ public class MemorableQuotesControllerIntegrationTest {
         mockMvc.perform(get(MemorableQuotesController.QUOTE_BASE_URL))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(content().json(asJson(singletonList(QuoteR.of(persistedUUID.toString(), "Jamie", "As ze mn pet aanraken ja dan flip ik altijd")))));
+                .andExpect(content().json(asJson(
+                        singletonList(QuoteR.of(persistedUUID.toString(),
+                        "Jamie",
+                        "As ze mn pet aanraken ja dan flip ik altijd"))
+                )));
     }
 
     @Test
     public void query_ListsOnlyQuotesByAuthor() throws Exception {
         quoteRepository.save(aDefaultQuote().build()).getId();
-        UUID narratorQuoteId1 = quoteRepository.save(aQuote().withAuthor("Piper").withQuotation("Watch your digits, Blue. Ferals.").build()).getId();
-        UUID narratorQuoteId2 = quoteRepository.save(aQuote().withAuthor("Piper").withQuotation("The Brotherhood sure knows how to take the fun out of dressing up in rivets and leather.").build()).getId();
+        UUID narratorQuoteId1 = quoteRepository.save(aQuote()
+                .withAuthor("Piper")
+                .withQuotation("Watch your digits, Blue. Ferals.")
+                .build())
+                .getId();
+        UUID narratorQuoteId2 = quoteRepository.save(aQuote()
+                .withAuthor("Piper")
+                .withQuotation("The Brotherhood sure knows how to take the fun out of dressing up in rivets and leather.")
+                .build())
+                .getId();
 
         String author = "Piper";
         QuoteR firstQuote = QuoteR.of(narratorQuoteId1.toString(), author, "Watch your digits, Blue. Ferals.");
