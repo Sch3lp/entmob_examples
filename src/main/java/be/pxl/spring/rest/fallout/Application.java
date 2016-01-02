@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class Application {
 
+    // Example of not using @Service or @Component, while still having an instance known to Spring.
     @Bean
     public QuoteAssembler quoteAssembler() {
         return new QuoteAssembler();

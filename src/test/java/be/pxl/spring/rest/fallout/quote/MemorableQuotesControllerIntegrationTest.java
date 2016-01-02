@@ -1,7 +1,6 @@
 package be.pxl.spring.rest.fallout.quote;
 
 import be.pxl.spring.rest.fallout.Application;
-import be.pxl.spring.rest.fallout.quote.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,7 +10,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.mock.http.MockHttpOutputMessage;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
@@ -31,11 +29,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringJUnit4ClassRunner.class)
+// Use production time wiring, but different database via src/test/resources/application.properties
 @SpringApplicationConfiguration(Application.class)
 @WebAppConfiguration
 public class MemorableQuotesControllerIntegrationTest {
 
-    // Spring-test utility class that queries Spring's DispatcherServlet to assert
+    // Spring-test utility class that queries Spring's DispatcherServlet to perform assertions
     private MockMvc mockMvc;
 
     private HttpMessageConverter mappingJackson2HttpMessageConverter;

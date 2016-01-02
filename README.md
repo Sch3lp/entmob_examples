@@ -17,11 +17,14 @@ If you're not on Linux [install Docker-Toolbox](https://www.docker.com/docker-to
 
 Check which ip your docker VM is running on with `docker-machine ip default`.
 
-Run `docker-compose run` to spin up a PostgreSQL database instance.
+Run `docker-compose up` to spin up two PostgreSQL database instances.
 
-You can then use this as your jdbc url `jdbc:postgresql://<your vm's ip>:5432/postgres` in your application or tests.
+You can then use this as your jdbc url `jdbc:postgresql://<your vm's ip>:5432/postgres` in your application.
 
 More info on [Postgres' DockerHub page](https://hub.docker.com/_/postgres/).
+
+### IntegrationTests
+In `src/test/resources/application.properties` you'll find it's pointing to `jdbc:postgresql://<your vm's ip>:5433/testdb` (note the difference in port and db name).
 
 ### Network timed out while trying to connect to ...
 ```

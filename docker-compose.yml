@@ -2,3 +2,9 @@ db:
   image: postgres
   ports:
     - "0.0.0.0:5432:5432"
+testdb:
+  image: postgres
+  environment:
+    - POSTGRES_DB=testdb
+  ports:
+    - "0.0.0.0:5433:5432"
