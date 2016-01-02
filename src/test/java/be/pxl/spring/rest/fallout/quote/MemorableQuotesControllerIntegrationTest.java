@@ -17,10 +17,11 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.UUID;
 
 import static be.pxl.spring.rest.fallout.quote.QuoteTestBuilder.aDefaultQuote;
+import static be.pxl.spring.rest.fallout.quote.QuoteTestBuilder.aQuote;
+import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -47,7 +48,7 @@ public class MemorableQuotesControllerIntegrationTest {
 
     @Autowired
     void setConverters(HttpMessageConverter<?>[] converters) {
-        mappingJackson2HttpMessageConverter = Arrays.asList(converters)
+        mappingJackson2HttpMessageConverter = asList(converters)
                 .stream()
                 .filter(hmc -> hmc instanceof MappingJackson2HttpMessageConverter)
                 .findAny()
@@ -71,16 +72,22 @@ public class MemorableQuotesControllerIntegrationTest {
         mockMvc.perform(get(MemorableQuotesController.QUOTE_BASE_URL))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(content().json(asJson(singletonList(QuoteR.of(persistedUUID.toString(), QuoteTestBuilder.AUTHOR, QuoteTestBuilder.QUOTATION)))));
+                .andExpect(content().json(asJson(singletonList(QuoteR.of(persistedUUID.toString(), "Jamie", "As ze mn pet aanraken ja dan flip ik altijd")))));
     }
 
     @Test
     public void query_ListsOnlyQuotesByAuthor() throws Exception {
-        String author = "Narrator";
+        quoteRepository.save(aDefaultQuote().build()).getId();
+        UUID narratorQuoteId1 = quoteRepository.save(aQuote().withAuthor("Piper").withQuotation("Watch your digits, Blue. Ferals.").build()).getId();
+        UUID narratorQuoteId2 = quoteRepository.save(aQuote().withAuthor("Piper").withQuotation("The Brotherhood sure knows how to take the fun out of dressing up in rivets and leather.").build()).getId();
+
+        String author = "Piper";
+        QuoteR firstQuote = QuoteR.of(narratorQuoteId1.toString(), author, "Watch your digits, Blue. Ferals.");
+        QuoteR secondQuote = QuoteR.of(narratorQuoteId2.toString(), author, "The Brotherhood sure knows how to take the fun out of dressing up in rivets and leather.");
         mockMvc.perform(get(MemorableQuotesController.QUOTE_BASE_URL).param("author", author))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(content().json(asJson(singletonList(QuoteR.of("1", author, "War...War never changes")))));
+                .andExpect(content().json(asJson(asList(firstQuote, secondQuote))));
     }
 
     protected String asJson(Object o) throws IOException {
