@@ -2,6 +2,7 @@ package be.pxl.spring.rest.fallout.quote;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,7 +22,7 @@ public class MemorableQuotesController {
     @Autowired
     private QuoteAssembler quoteAssembler;
 
-    @RequestMapping
+    @RequestMapping(method = RequestMethod.GET)
     public List<QuoteR> all() {
         return quoteRepository
                 .findAll()
@@ -30,7 +31,7 @@ public class MemorableQuotesController {
                 .collect(toList());
     }
 
-    @RequestMapping(params = {"author"})
+    @RequestMapping(method = RequestMethod.GET, params = {"author"})
     public List<QuoteR> byAuthor(@RequestParam("author") String author) {
         return quoteRepository
                 .findByAuthor(author)

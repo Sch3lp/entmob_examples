@@ -5,7 +5,6 @@ import org.mockito.internal.util.reflection.Whitebox;
 import java.util.UUID;
 
 public class QuoteTestBuilder {
-    public static final UUID ID = UUID.randomUUID();
     public static final String AUTHOR = "Jamie";
     public static final String QUOTATION = "As ze mn pet aanraken ja dan flip ik altijd";
 
@@ -18,7 +17,7 @@ public class QuoteTestBuilder {
     }
 
     public static QuoteTestBuilder aDefaultQuote() {
-        return new QuoteTestBuilder().withId(ID).withAuthor(AUTHOR).withQuotation(QUOTATION);
+        return new QuoteTestBuilder().withId(UUID.randomUUID()).withAuthor(AUTHOR).withQuotation(QUOTATION);
     }
 
     public Quote build() {
