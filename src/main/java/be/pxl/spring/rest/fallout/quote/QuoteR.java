@@ -1,5 +1,8 @@
 package be.pxl.spring.rest.fallout.quote;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class QuoteR {
     private String id;
     private String author;
@@ -9,7 +12,10 @@ public class QuoteR {
         return new QuoteR(id, author, quote);
     }
 
-    private QuoteR(String id, String author, String quote) {
+    public static QuoteR of(String author, String quote) { return new QuoteR(null, author, quote); }
+
+    @JsonCreator
+    private QuoteR(@JsonProperty("id")String id, @JsonProperty("author")String author, @JsonProperty("quote")String quote) {
         this.id = id;
         this.author = author;
         this.quote = quote;
@@ -25,5 +31,14 @@ public class QuoteR {
 
     public String getQuote() {
         return quote;
+    }
+
+    @Override
+    public String toString() {
+        return "QuoteR{" +
+                "id='" + id + '\'' +
+                ", author='" + author + '\'' +
+                ", quote='" + quote + '\'' +
+                '}';
     }
 }

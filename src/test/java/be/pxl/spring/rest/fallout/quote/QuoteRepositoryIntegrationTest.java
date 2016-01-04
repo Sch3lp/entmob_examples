@@ -29,6 +29,6 @@ public class QuoteRepositoryIntegrationTest {
 
         List<Quote> quotes = quoteRepository.findByAuthor("Piper");
 
-        assertThat(quotes).extracting("quotation").containsOnly("quotation", "quotation3");
+        assertThat(quotes).extracting(Quote::getQuotation).containsOnly("quotation", "quotation3");
     }
 }

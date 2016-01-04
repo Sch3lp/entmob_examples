@@ -25,8 +25,8 @@ import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -102,6 +102,17 @@ public class MemorableQuotesControllerIntegrationTest {
                 .andExpect(content().json(asJson(asList(firstQuote, secondQuote))));
     }
 
+    @Test
+    public void post_PersistsANewQuote() throws Exception {
+        mockMvc.perform(post(MemorableQuotesController.QUOTE_BASE_URL)
+                .content(asJson(QuoteR.of("Dreft", "Niks verdikt! M'n trui is gekrompen!")))
+                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isOk());
+
+        assertThat(quoteRepository.findAll()).extracting(Quote::getQuotation).containsOnly("Niks verdikt! M'n trui is gekrompen!");
+    }
+
+    @SuppressWarnings("unchecked")
     protected String asJson(Object o) throws IOException {
         MockHttpOutputMessage mockHttpOutputMessage = new MockHttpOutputMessage();
         this.mappingJackson2HttpMessageConverter.write(o, MediaType.APPLICATION_JSON, mockHttpOutputMessage);
