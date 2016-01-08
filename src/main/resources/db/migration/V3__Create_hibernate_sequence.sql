@@ -1,0 +1,1 @@
+CREATE SEQUENCE hibernate_sequence START 3; /*take into account default users*/
