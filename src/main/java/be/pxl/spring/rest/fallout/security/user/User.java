@@ -25,7 +25,7 @@ public class User {
     public User(String name, String password) {
         this.name = name;
         this.password = password;
-        this.role = Role.USER;
+        this.role = Role.ROLE_USER;
         this.enabled = true;
     }
 

@@ -31,7 +31,7 @@ public class UserRepositoryTest {
         assertThat(gianni.getId()).isNotNull();
         assertThat(gianni.getName()).isEqualTo("gianni");
         assertThat(gianni.getPassword()).isEqualTo("ub3rl33t");
-        assertThat(gianni.getRole()).isEqualTo(Role.USER);
+        assertThat(gianni.getRole()).isEqualTo(Role.ROLE_USER);
         assertThat(gianni.isEnabled()).isTrue();
     }
 }

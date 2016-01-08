@@ -1,2 +1,2 @@
-insert into users VALUES (1,'Father', '$2a$10$IfCEBN.pwnMvq6oZXpgB6ePAGQNs14UHQRAd6KSXJSJAez01o7Zce', 'ADMIN', true);/*institute4life*/
-insert into users VALUES (2,'Desdemona', '$2a$10$mDNijI.nDxslDLixP7zFOu5yPkzlcDszJ55V9IwfjrldeRAvH.v8S', 'USER', true); /*rescueallthesynths*/
+insert into users VALUES (1,'Father', '$2a$10$IfCEBN.pwnMvq6oZXpgB6ePAGQNs14UHQRAd6KSXJSJAez01o7Zce', 'ROLE_ADMIN', true);/*institute4life*/
+insert into users VALUES (2,'Desdemona', '$2a$10$mDNijI.nDxslDLixP7zFOu5yPkzlcDszJ55V9IwfjrldeRAvH.v8S', 'ROLE_USER', true); /*rescueallthesynths*/
