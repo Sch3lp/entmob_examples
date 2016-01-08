@@ -1,6 +1,8 @@
 package be.pxl.spring.rest.fallout.quote;
 
 import be.pxl.spring.rest.fallout.Application;
+import org.flywaydb.test.annotation.FlywayTest;
+import org.flywaydb.test.junit.FlywayTestExecutionListener;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,7 +12,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.mock.http.MockHttpOutputMessage;
+import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -30,6 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringJUnit4ClassRunner.class)
+@TestExecutionListeners({FlywayTestExecutionListener.class, DependencyInjectionTestExecutionListener.class})
 // Use production time wiring, but different database via src/test/resources/application.properties
 @SpringApplicationConfiguration(Application.class)
 @WebAppConfiguration
@@ -65,21 +70,6 @@ public class MemorableQuotesControllerIntegrationTest {
     }
 
     @Test
-    public void all_ListsAllTheQuotes() throws Exception {
-        Quote quote = aDefaultQuote().build();
-        UUID persistedUUID = quoteRepository.save(quote).getId();
-
-        mockMvc.perform(get(MemorableQuotesController.QUOTE_BASE_URL))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(content().json(asJson(
-                        singletonList(QuoteR.of(persistedUUID.toString(),
-                        "Jamie",
-                        "As ze mn pet aanraken ja dan flip ik altijd"))
-                )));
-    }
-
-    @Test
     public void query_ListsOnlyQuotesByAuthor() throws Exception {
         quoteRepository.save(aDefaultQuote().build()).getId();
         UUID narratorQuoteId1 = quoteRepository.save(aQuote()
@@ -103,6 +93,23 @@ public class MemorableQuotesControllerIntegrationTest {
     }
 
     @Test
+    @FlywayTest //to make this test method independent of other test methods in this class
+    public void all_ListsAllTheQuotes() throws Exception {
+        Quote quote = aDefaultQuote().build();
+        UUID persistedUUID = quoteRepository.save(quote).getId();
+
+        mockMvc.perform(get(MemorableQuotesController.QUOTE_BASE_URL))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(content().json(asJson(
+                        singletonList(QuoteR.of(persistedUUID.toString(),
+                        "Jamie",
+                        "As ze mn pet aanraken ja dan flip ik altijd"))
+                )));
+    }
+
+    @Test
+    @FlywayTest //to make this test method independent of other test methods in this class
     public void post_PersistsANewQuote() throws Exception {
         mockMvc.perform(post(MemorableQuotesController.QUOTE_BASE_URL)
                 .content(asJson(QuoteR.of("Dreft", "Niks verdikt! M'n trui is gekrompen!")))
