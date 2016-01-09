@@ -1,8 +1,6 @@
 package be.pxl.spring.rest.fallout.quote;
 
 import be.pxl.spring.rest.fallout.Application;
-import be.pxl.spring.rest.fallout.security.user.User;
-import be.pxl.spring.rest.fallout.security.user.UserRepository;
 import org.flywaydb.test.annotation.FlywayTest;
 import org.flywaydb.test.junit.FlywayTestExecutionListener;
 import org.junit.Before;
@@ -14,9 +12,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.mock.http.MockHttpOutputMessage;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -54,8 +49,6 @@ public class MemorableQuotesControllerIntegrationTest {
 
     @Autowired
     public QuoteRepository quoteRepository;
-    @Autowired
-    private UserRepository userRepository;
 
     @Autowired
     private WebApplicationContext webAppContext;
@@ -126,8 +119,6 @@ public class MemorableQuotesControllerIntegrationTest {
     @Test
     @FlywayTest
     public void post_WithAdminUser_PersistsANewQuote() throws Exception {
-        assertThat(userRepository.findAll()).extracting(User::getName).contains("Father");
-
         mockMvc.perform(post(MemorableQuotesController.QUOTE_BASE_URL)
                 .with(user("admin").roles("ADMIN"))
                 .content(asJson(QuoteR.of("Dr. Madison Li", "Niks verdikt! M'n trui is gekrompen!")))
@@ -140,8 +131,6 @@ public class MemorableQuotesControllerIntegrationTest {
     @Test
     @FlywayTest
     public void post_WithNonAdminUser_Returns403() throws Exception {
-        assertThat(userRepository.findAll()).extracting(User::getName).contains("Desdemona");
-
         mockMvc.perform(post(MemorableQuotesController.QUOTE_BASE_URL)
                 .with(user("user").roles("USER"))
                 .content(asJson(QuoteR.of("Deacon", "All this sunlight. I feel exposed.")))
