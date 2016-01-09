@@ -59,6 +59,7 @@ dependencies {
     testCompile("org.assertj:assertj-core:3.2.0")
     testCompile("org.mockito:mockito-core:2.0.31-beta")
     testCompile("org.springframework.boot:spring-boot-starter-test")
+    testCompile("org.springframework.security:spring-security-test")
     testCompile("org.skyscreamer:jsonassert:1.2.3")
     testCompile("org.flywaydb.flyway-test-extensions:flyway-spring-test:3.2.1.1")
 }

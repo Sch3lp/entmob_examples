@@ -1,6 +1,8 @@
 package be.pxl.spring.rest.fallout.quote;
 
 import be.pxl.spring.rest.fallout.Application;
+import be.pxl.spring.rest.fallout.security.user.User;
+import be.pxl.spring.rest.fallout.security.user.UserRepository;
 import org.flywaydb.test.annotation.FlywayTest;
 import org.flywaydb.test.junit.FlywayTestExecutionListener;
 import org.junit.Before;
@@ -12,6 +14,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.mock.http.MockHttpOutputMessage;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
+import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
@@ -28,6 +34,7 @@ import static be.pxl.spring.rest.fallout.quote.QuoteTestBuilder.aQuote;
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -47,6 +54,8 @@ public class MemorableQuotesControllerIntegrationTest {
 
     @Autowired
     public QuoteRepository quoteRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private WebApplicationContext webAppContext;
@@ -66,10 +75,13 @@ public class MemorableQuotesControllerIntegrationTest {
 
     @Before
     public void setUp() throws Exception {
-        mockMvc = MockMvcBuilders.webAppContextSetup(webAppContext).build();
+        mockMvc = MockMvcBuilders.webAppContextSetup(webAppContext)
+                .apply(SecurityMockMvcConfigurers.springSecurity())
+                .build();
     }
 
     @Test
+    @FlywayTest
     public void query_ListsOnlyQuotesByAuthor() throws Exception {
         quoteRepository.save(aDefaultQuote().build()).getId();
         UUID narratorQuoteId1 = quoteRepository.save(aQuote()
@@ -86,19 +98,22 @@ public class MemorableQuotesControllerIntegrationTest {
         String author = "Piper";
         QuoteR firstQuote = QuoteR.of(narratorQuoteId1.toString(), author, "Watch your digits, Blue. Ferals.");
         QuoteR secondQuote = QuoteR.of(narratorQuoteId2.toString(), author, "The Brotherhood sure knows how to take the fun out of dressing up in rivets and leather.");
-        mockMvc.perform(get(MemorableQuotesController.QUOTE_BASE_URL).param("author", author))
+        mockMvc.perform(get(MemorableQuotesController.QUOTE_BASE_URL)
+                .param("author", author)
+                .with(user("Desdemona").password("rescueallthesynths")))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(content().json(asJson(asList(firstQuote, secondQuote))));
     }
 
     @Test
-    @FlywayTest //to make this test method independent of other test methods in this class
+    @FlywayTest
     public void all_ListsAllTheQuotes() throws Exception {
         Quote quote = aDefaultQuote().build();
         UUID persistedUUID = quoteRepository.save(quote).getId();
 
-        mockMvc.perform(get(MemorableQuotesController.QUOTE_BASE_URL))
+        mockMvc.perform(get(MemorableQuotesController.QUOTE_BASE_URL)
+                .with(user("Desdemona").password("rescueallthesynths")))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(content().json(asJson(
@@ -109,14 +124,29 @@ public class MemorableQuotesControllerIntegrationTest {
     }
 
     @Test
-    @FlywayTest //to make this test method independent of other test methods in this class
-    public void post_PersistsANewQuote() throws Exception {
+    @FlywayTest
+    public void post_WithAdminUser_PersistsANewQuote() throws Exception {
+        assertThat(userRepository.findAll()).extracting(User::getName).contains("Father");
+
         mockMvc.perform(post(MemorableQuotesController.QUOTE_BASE_URL)
-                .content(asJson(QuoteR.of("Dreft", "Niks verdikt! M'n trui is gekrompen!")))
+                .with(user("admin").roles("ADMIN"))
+                .content(asJson(QuoteR.of("Dr. Madison Li", "Niks verdikt! M'n trui is gekrompen!")))
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk());
 
         assertThat(quoteRepository.findAll()).extracting(Quote::getQuotation).containsOnly("Niks verdikt! M'n trui is gekrompen!");
+    }
+
+    @Test
+    @FlywayTest
+    public void post_WithNonAdminUser_Returns403() throws Exception {
+        assertThat(userRepository.findAll()).extracting(User::getName).contains("Desdemona");
+
+        mockMvc.perform(post(MemorableQuotesController.QUOTE_BASE_URL)
+                .with(user("user").roles("USER"))
+                .content(asJson(QuoteR.of("Deacon", "All this sunlight. I feel exposed.")))
+                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().is(403));
     }
 
     @SuppressWarnings("unchecked")
