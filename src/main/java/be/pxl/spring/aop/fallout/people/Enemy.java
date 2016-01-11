@@ -4,6 +4,10 @@ public class Enemy {
 
     private Health health = Health.of(100);
 
+    public Enemy(Health health) {
+        this.health = health;
+    }
+
     public HealthStatus healthStatus() {
         return health.status();
     }

@@ -3,9 +3,9 @@ package be.pxl.spring.aop.fallout.people;
 public class Protagonist implements AdvisablePerson {
 
     private int damagePoints;
-    private int luck;
+    private Luck luck;
 
-    public Protagonist(int damagePoints, int luck) {
+    public Protagonist(int damagePoints, Luck luck) {
         this.damagePoints = damagePoints;
         this.luck = luck;
     }
@@ -15,6 +15,6 @@ public class Protagonist implements AdvisablePerson {
     }
 
     public boolean hasALotOfLuck() {
-        return luck > 10;
+        return luck.isOver10();
     }
 }
