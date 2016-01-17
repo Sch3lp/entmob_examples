@@ -1,6 +1,7 @@
 package be.pxl.spring.rest.fallout.item;
 
 
+import be.pxl.spring.rest.fallout.jms.JMSMessageLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -20,6 +21,8 @@ public class ItemController {
     @Autowired
     private ItemService itemService;
 
+    @Autowired
+    private JMSMessageLogger logger;
 
     @RequestMapping(method = RequestMethod.POST)
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -31,6 +34,8 @@ public class ItemController {
     public ResponseEntity pickupItem(@PathVariable("id") String id) {
         String userName = SecurityContextHolder.getContext().getAuthentication().getName();
         Item pickedUpItem = itemService.pickUp(UUID.fromString(id), userName);
+
+        logger.log(String.format("%s picked up [%s]", userName, pickedUpItem.getName()));
 
         return ResponseEntity.ok(pickedUpItem);
     }

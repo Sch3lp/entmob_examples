@@ -48,6 +48,9 @@ dependencies {
 
     compile("org.springframework.boot:spring-boot-starter-security")
 
+    compile("org.springframework:spring-jms")
+    compile("org.apache.activemq:activemq-broker")
+
     compile("org.springframework.boot:spring-boot-starter-data-jpa")
     compile("org.flywaydb:flyway-core")
     compile("org.postgresql:postgresql:9.4-1206-jdbc42")

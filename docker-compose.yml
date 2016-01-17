@@ -8,3 +8,9 @@ testdb:
     - POSTGRES_DB=testdb
   ports:
     - "0.0.0.0:5433:5432"
+jms:
+    image: rmohr/activemq:5.11.1
+    ports:
+      - "0.0.0.0:61616:61616"
+      - "0.0.0.0:8161:8161"
+      - "0.0.0.0:9876:9876"
