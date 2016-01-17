@@ -18,7 +18,7 @@ public class ItemService {
     @Autowired
     private UserRepository userRepository;
 
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = RuntimeException.class)
     public Item pickUp(UUID itemID, String userName) {
         Item existingItem = itemRepository.findOne(itemID);
         User loggedInUser = userRepository.findByName(userName);
