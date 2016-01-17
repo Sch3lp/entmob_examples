@@ -1,7 +1,7 @@
 package be.pxl.spring.aop.fallout;
 
 import be.pxl.spring.aop.TestConfiguration;
-import be.pxl.spring.aop.fallout.people.*;
+import be.pxl.spring.rest.fallout.people.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

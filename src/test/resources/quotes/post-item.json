@@ -1,0 +1,8 @@
+POST http://localhost:8080/item
+Authorization: Basic RmF0aGVyOmluc3RpdHV0ZTRsaWZl
+Content-Type: application/json;UTF8
+Accept: application/json;UTF8
+POST_BODY:
+{
+"name": "You're S.P.E.C.I.A.L."
+}

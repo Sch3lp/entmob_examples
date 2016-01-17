@@ -1,4 +1,4 @@
-package be.pxl.spring.aop.fallout.people;
+package be.pxl.spring.rest.fallout.people;
 
 public class Protagonist implements AdvisablePerson {
 
