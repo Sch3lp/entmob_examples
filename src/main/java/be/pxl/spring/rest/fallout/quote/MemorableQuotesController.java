@@ -1,5 +1,6 @@
 package be.pxl.spring.rest.fallout.quote;
 
+import be.pxl.spring.rest.fallout.logging.Loggable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,6 +23,7 @@ public class MemorableQuotesController {
     @Autowired
     private QuoteAssembler quoteAssembler;
 
+    @Loggable
     @RequestMapping(method = RequestMethod.GET)
     public List<QuoteR> all() {
         return quoteService

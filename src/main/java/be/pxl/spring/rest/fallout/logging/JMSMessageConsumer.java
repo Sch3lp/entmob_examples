@@ -1,4 +1,4 @@
-package be.pxl.spring.rest.fallout.jms;
+package be.pxl.spring.rest.fallout.logging;
 
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
@@ -10,6 +10,6 @@ public class JMSMessageConsumer {
 
     @JmsListener(destination = "ItemLogQueue")
     public void onMessage(Message message) {
-        System.out.println("Hi, I'm JMSMessageConsumer and I got "+message);
+        System.out.println("Hi, I'm JMSMessageConsumer and I got " + message);
     }
 }

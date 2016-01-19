@@ -30,8 +30,8 @@ public class Application {
         return new QuoteAssembler();
     }
 
-    @Bean(name = "JMSLoggerQueue")
-    public Queue jmsLoggerQueue() {
+    @Bean(name = "LogQueueBean")
+    public Queue logQueueBean() {
         return new ActiveMQQueue("ItemLogQueue");
     }
 

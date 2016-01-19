@@ -1,4 +1,4 @@
-package be.pxl.spring.rest.fallout.jms;
+package be.pxl.spring.rest.fallout.logging;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,7 +14,7 @@ public class JMSMessageLogger {
     private JmsTemplate jmsTemplate;
 
     @Autowired
-    @Qualifier("JMSLoggerQueue")
+    @Qualifier("LogQueueBean")
     private Queue destination;
 
     public void log(String message){

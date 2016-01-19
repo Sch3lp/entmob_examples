@@ -1,4 +1,0 @@
-PUT http://localhost:8080/item/d06c5cf4-540e-42ca-af85-e2eba2b13597
-Authorization: Basic RGVzZGVtb25hOnJlc2N1ZWFsbHRoZXN5bnRocw==
-Content-Type: application/json;UTF8
-Accept: application/json;UTF8
