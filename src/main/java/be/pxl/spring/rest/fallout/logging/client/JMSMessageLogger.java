@@ -1,5 +1,6 @@
-package be.pxl.spring.rest.fallout.logging;
+package be.pxl.spring.rest.fallout.logging.client;
 
+import be.pxl.spring.rest.fallout.logging.sharedapi.LogTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,6 @@ import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.jms.JMSException;
-import javax.jms.MapMessage;
 import javax.jms.Queue;
 import java.time.LocalDateTime;
 

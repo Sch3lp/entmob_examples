@@ -1,4 +1,4 @@
-package be.pxl.spring.rest.fallout.logging;
+package be.pxl.spring.rest.fallout.logging.client;
 
 
 import java.lang.annotation.ElementType;

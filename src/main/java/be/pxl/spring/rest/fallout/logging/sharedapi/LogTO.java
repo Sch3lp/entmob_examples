@@ -1,4 +1,4 @@
-package be.pxl.spring.rest.fallout.logging;
+package be.pxl.spring.rest.fallout.logging.sharedapi;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;

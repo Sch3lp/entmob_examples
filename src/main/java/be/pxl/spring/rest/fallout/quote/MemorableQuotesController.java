@@ -1,6 +1,6 @@
 package be.pxl.spring.rest.fallout.quote;
 
-import be.pxl.spring.rest.fallout.logging.Loggable;
+import be.pxl.spring.rest.fallout.logging.client.Loggable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

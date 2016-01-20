@@ -1,5 +1,6 @@
-package be.pxl.spring.rest.fallout.logging;
+package be.pxl.spring.rest.fallout.logging.client;
 
+import be.pxl.spring.rest.fallout.logging.client.JMSMessageLogger;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -14,7 +15,7 @@ public class JMSLoggingAspect {
     @Autowired
     private JMSMessageLogger logger;
 
-    @Around("@annotation(Loggable)")
+    @Around("@annotation(be.pxl.spring.rest.fallout.logging.client.Loggable)")
     public Object logMessage(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         String user = SecurityContextHolder.getContext().getAuthentication().getName();
         String action = proceedingJoinPoint.getSignature().toShortString();

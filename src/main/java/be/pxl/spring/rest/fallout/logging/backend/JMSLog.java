@@ -1,4 +1,4 @@
-package be.pxl.spring.rest.fallout.logging;
+package be.pxl.spring.rest.fallout.logging.backend;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
