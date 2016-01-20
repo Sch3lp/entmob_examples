@@ -18,7 +18,6 @@ public class JMSMessageConsumer {
 
     @JmsListener(destination = "ItemLogQueue")
     public void onMessage(TextMessage message) throws JMSException, IOException {
-        System.out.println(message.getText());
         ObjectMapper om = new ObjectMapper();
         om.findAndRegisterModules();
         LogTO logTO = om.readValue(message.getText(), LogTO.class);

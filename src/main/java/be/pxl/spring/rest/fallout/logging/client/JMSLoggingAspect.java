@@ -1,6 +1,5 @@
 package be.pxl.spring.rest.fallout.logging.client;
 
-import be.pxl.spring.rest.fallout.logging.client.JMSMessageLogger;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
