@@ -1,6 +1,8 @@
 package be.pxl.spring.rest.fallout.security.user;
 
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.*;
 
 @Entity
@@ -12,6 +14,7 @@ public class User {
     private long id;
 
     @Column(name = "UNAME")
+    @Length(max = 50)
     private String name;
 
     private String password;

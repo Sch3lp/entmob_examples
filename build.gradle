@@ -50,6 +50,7 @@ dependencies {
 
     compile("org.springframework:spring-jms")
     compile("org.apache.activemq:activemq-broker")
+    compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.6.1") //to automatically deserialize LocalDateTimes etc.
 
     compile("org.springframework.boot:spring-boot-starter-data-jpa")
     compile("org.flywaydb:flyway-core")

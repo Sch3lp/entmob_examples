@@ -1,11 +1,16 @@
 package be.pxl.spring.rest.fallout.logging;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Component;
 
+import javax.jms.JMSException;
+import javax.jms.MapMessage;
 import javax.jms.Queue;
+import java.time.LocalDateTime;
 
 @Component
 public class JMSMessageLogger {
@@ -17,10 +22,13 @@ public class JMSMessageLogger {
     @Qualifier("LogQueueBean")
     private Queue destination;
 
-    public void log(String message){
+    public void log(String username, String logMessage) throws JMSException, JsonProcessingException {
+        ObjectMapper om = new ObjectMapper();
+        om.findAndRegisterModules();
+        String logMessageTO = om.writeValueAsString(new LogTO(LocalDateTime.now(), username, logMessage));
         jmsTemplate.send(
                 destination,
-                (session) -> session.createTextMessage(message)
+                (session) -> session.createTextMessage(logMessageTO)
         );
     }
 }

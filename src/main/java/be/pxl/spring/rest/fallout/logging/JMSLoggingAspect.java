@@ -17,8 +17,8 @@ public class JMSLoggingAspect {
     @Around("@annotation(Loggable)")
     public Object logMessage(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         String user = SecurityContextHolder.getContext().getAuthentication().getName();
-        String action = proceedingJoinPoint.getSignature().getDeclaringTypeName();
-        logger.log(String.format("User:[%s] performed action:[%s]", user, action));
+        String action = proceedingJoinPoint.getSignature().toShortString();
+        logger.log(user, String.format("performed action:[%s]", action));
         return proceedingJoinPoint.proceed();
     }
 
