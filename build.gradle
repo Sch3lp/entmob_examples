@@ -42,7 +42,6 @@ dependencies {
 
     compile("org.springframework:spring-context:$springVersion")
 
-    // Use Jetty instead of default embedded Tomcat
     // No version declared, taken from buildscript dependency
     compile("org.springframework.boot:spring-boot-starter-web")
 
