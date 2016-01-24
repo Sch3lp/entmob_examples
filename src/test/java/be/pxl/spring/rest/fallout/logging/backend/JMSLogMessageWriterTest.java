@@ -18,7 +18,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class JMSMessageConsumerTest {
+public class JMSLogMessageWriterTest {
 
     @Mock
     private TextMessage jmsTextMessageMock;
@@ -26,11 +26,11 @@ public class JMSMessageConsumerTest {
     @Mock
     private JMSLogRepository jmsLogRepositoryMock;
 
-    @Captor
+    @Captor //captures arguments to verified method calls, so we can assert given arguments
     private ArgumentCaptor<JMSLog> jmsLogCaptor;
 
     @InjectMocks //both instantiates and injects necessary dependencies (by setter, constructor, reflection)
-    private JMSMessageConsumer consumer;
+    private JMSLogMessageWriter consumer;
 
     @Test
     public void onMessage_CanTransformJMSMessageTOLogTO_AndPersists() throws Exception {

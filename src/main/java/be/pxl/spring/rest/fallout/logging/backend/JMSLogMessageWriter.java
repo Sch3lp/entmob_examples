@@ -11,7 +11,7 @@ import javax.jms.TextMessage;
 import java.io.IOException;
 
 @Component
-public class JMSMessageConsumer {
+public class JMSLogMessageWriter {
 
     @Autowired
     private JMSLogRepository jmsLogRepository;
@@ -19,7 +19,7 @@ public class JMSMessageConsumer {
     @JmsListener(destination = "ItemLogQueue")
     public void onMessage(TextMessage message) throws JMSException, IOException {
         ObjectMapper om = new ObjectMapper();
-        om.findAndRegisterModules();
+        om.findAndRegisterModules(); //necessary for LocalDateTime conversion
         LogTO logTO = om.readValue(message.getText(), LogTO.class);
         JMSLog log = JMSLog.log(logTO.getLoggedOn(), logTO.getUsername(), logTO.getLogMessage());
         jmsLogRepository.save(log);
