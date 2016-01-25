@@ -28,8 +28,9 @@ In `src/test/resources/application.properties` you'll find it's pointing to `jdb
 
 ### Network timed out while trying to connect to ...
 ```
-docker-machine restart default      # Restart the environment
-`$(docker-machine env default)`     # Refresh your environment settings
+docker-machine restart default                          # Restart the environment
+`$(docker-machine env default)`                         # Refresh your environment settings
+eval "$(/c/DockerTools/docker-machine env default)"     # Or this is if you're on windows
 ```
 
 ## FlyWay
