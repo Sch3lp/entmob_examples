@@ -9,20 +9,20 @@ import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
-public class OrderServiceUnitTest {
+public class DatabaseOrderServiceUnitTest {
 
 //    @Rule
 //    public MockitoRule mockitoRule = MockitoJUnit.rule();
 
     @InjectMocks
-    private OrderService orderService;
+    private DatabaseOrderService dbOrderService;
 
     @Mock
     private OrderDAO orderDAOMock;
 
     @Test
     public void createOrder_PersistsAnOrder() throws Exception {
-        orderService.createOrder();
+        dbOrderService.createOrder();
         Mockito.verify(orderDAOMock).persist(Matchers.any(Order.class));
     }
 }
