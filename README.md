@@ -15,6 +15,17 @@ In `build.gradle` I included the `idea` and `eclipse` plugins, so all there is t
 ## Docker stuff
 If you're not on Linux [install Docker-Toolbox](https://www.docker.com/docker-toolbox).
 
+### Installing on OSX
+The installer might not have created a `default` machine, so you'll have to create it manually.
+
+You can tell you don't have a `default` machine when `docker-machine ip default` returns `Error: No machine name(s) specified and no "default" machine exists.`.
+
+Run this command `docker-machine create -d virtualbox default`.
+
+Then run `eval $(docker-machine env)` to sync your shell with the VM.
+
+### Docker stuff continued
+
 Check which ip your docker VM is running on with `docker-machine ip default`.
 
 Run `docker-compose up` to spin up two PostgreSQL database instances.
