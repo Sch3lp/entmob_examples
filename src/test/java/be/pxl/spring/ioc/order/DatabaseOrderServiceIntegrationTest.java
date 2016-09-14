@@ -9,13 +9,13 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = ApplicationConfig.class)
-public class OrderServiceIntegrationTest {
+public class DatabaseOrderServiceIntegrationTest {
 
     @Autowired
-    private OrderService orderService;
+    private DatabaseOrderService dbOrderService;
 
     @Test
     public void createOrder_PersistsAnOrder() throws Exception {
-        orderService.createOrder();
+        dbOrderService.createOrder();
     }
 }
