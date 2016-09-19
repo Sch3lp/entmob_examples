@@ -1,24 +1,18 @@
 package be.pxl.spring.ioc;
 
-import be.pxl.spring.ioc.order.OrderDAO;
 import be.pxl.spring.ioc.order.DatabaseOrderService;
-import be.pxl.spring.ioc.order.OrderService;
 
 public class IoC101 {
 
-    private OrderService orderService;
-
-    private IoC101(OrderService orderService) {
-        this.orderService = orderService;
+    private IoC101() {
     }
 
     public static void main(String[] args) {
-        OrderDAO orderDAO = new OrderDAO();
-        DatabaseOrderService orderService = new DatabaseOrderService(orderDAO);
-        new IoC101(orderService).run();
+        new IoC101().run();
     }
 
     private void run() {
+        DatabaseOrderService orderService = new DatabaseOrderService();
         orderService.createOrder();
     }
 }

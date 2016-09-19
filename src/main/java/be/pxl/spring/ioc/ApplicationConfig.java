@@ -1,7 +1,8 @@
 package be.pxl.spring.ioc;
 
-import be.pxl.spring.ioc.order.OrderDAO;
 import be.pxl.spring.ioc.order.DatabaseOrderService;
+import be.pxl.spring.ioc.order.OrderDAO;
+import be.pxl.spring.ioc.order.OrderDAOImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -15,6 +16,6 @@ public class ApplicationConfig {
 
     @Bean
     public OrderDAO orderDAO() {
-        return new OrderDAO();
+        return new OrderDAOImpl();
     }
 }
