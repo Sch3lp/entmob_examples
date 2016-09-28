@@ -1,11 +1,13 @@
 package be.pxl.spring.rest.fallout;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RequestMapping(MemorableQuotesController.QUOTE_BASE_URL)
@@ -35,8 +37,11 @@ public class MemorableQuotesController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Quote> create(@RequestBody Quote newQuote) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public Quote create(@RequestBody Quote newQuote) {
+        newQuote.setId(String.valueOf(quotes.size()+1));
         quotes.add(newQuote);
-        return ResponseEntity.created(URI.create(QUOTE_BASE_URL+"/"+newQuote.getId())).body(newQuote);
+        return newQuote;
+//        return ResponseEntity.created(URI.create(QUOTE_BASE_URL+"/"+newQuote.getId())).body(newQuote);
     }
 }

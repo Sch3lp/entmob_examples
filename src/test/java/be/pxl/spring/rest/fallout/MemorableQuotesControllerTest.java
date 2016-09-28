@@ -69,7 +69,9 @@ public class MemorableQuotesControllerTest {
         String response = mockMvc.perform(post(QUOTE_BASE_URL).contentType(MediaType.APPLICATION_JSON_UTF8).content(asJson(newQuote)))
                 .andExpect(status().isCreated())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(header().string("location","/quote/6"))
                 .andReturn().getResponse().getContentAsString();
+        newQuote.setId("6"); //id is current quotes list size + 1
         assertThat(response).isEqualTo(asJson(newQuote));
     }
 
