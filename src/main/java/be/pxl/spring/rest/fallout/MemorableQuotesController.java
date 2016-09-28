@@ -1,6 +1,5 @@
 package be.pxl.spring.rest.fallout;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,11 +36,9 @@ public class MemorableQuotesController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    @ResponseStatus(HttpStatus.CREATED)
-    public Quote create(@RequestBody Quote newQuote) {
+    public ResponseEntity<Quote> create(@RequestBody Quote newQuote) {
         newQuote.setId(String.valueOf(quotes.size()+1));
         quotes.add(newQuote);
-        return newQuote;
-//        return ResponseEntity.created(URI.create(QUOTE_BASE_URL+"/"+newQuote.getId())).body(newQuote);
+        return ResponseEntity.created(URI.create(QUOTE_BASE_URL+"/"+newQuote.getId())).body(newQuote);
     }
 }
