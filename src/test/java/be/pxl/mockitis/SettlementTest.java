@@ -1,6 +1,8 @@
 package be.pxl.mockitis;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.Arrays;
 import java.util.List;
@@ -9,6 +11,8 @@ import static be.pxl.mockitis.RaiderTestBuilder.aRaider;
 import static be.pxl.mockitis.SettlerTestBuilder.aDefender;
 import static be.pxl.mockitis.SettlerTestBuilder.aSettler;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class SettlementTest {
 
