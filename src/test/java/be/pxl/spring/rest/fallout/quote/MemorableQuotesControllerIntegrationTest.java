@@ -1,17 +1,15 @@
 package be.pxl.spring.rest.fallout.quote;
 
-import be.pxl.spring.rest.fallout.Application;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.mock.http.MockHttpOutputMessage;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -29,10 +27,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(SpringRunner.class)
 // Use production time wiring, but different database via src/test/resources/application.properties
-@SpringApplicationConfiguration(Application.class)
-@WebAppConfiguration
+@SpringBootTest
 public class MemorableQuotesControllerIntegrationTest {
 
     // Spring-test utility class that queries Spring's DispatcherServlet to perform assertions
@@ -61,6 +58,7 @@ public class MemorableQuotesControllerIntegrationTest {
 
     @Before
     public void setUp() throws Exception {
+        quoteRepository.deleteAll();
         mockMvc = MockMvcBuilders.webAppContextSetup(webAppContext).build();
     }
 
