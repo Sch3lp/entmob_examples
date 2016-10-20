@@ -12,7 +12,7 @@ public class RaidersTestBuilder {
     }
 
     public Raiders build(){
-        Raiders raiders = new Raiders();
+        Raiders raiders = new Raiders(false);
         attackers.forEach(raiders::addAttacker);
         return raiders;
     }
