@@ -43,6 +43,11 @@ docker-machine restart default      # Restart the environment
 `$(docker-machine env default)`     # Refresh your environment settings
 ```
 
+## ActiveMQ
+To monitor the queues that were started by the ActiveMQ broker, you can navigate to `http://<your vm's ip>:8161/admin`.
+
+You can log in with the default credentials: `admin/admin`.
+
 ## FlyWay
 [FlyWay](http://flywaydb.org/) makes sure your database tables are up to date and uses simple convention over configuration to manage your versioned SQL scripts.
 

@@ -1,6 +1,5 @@
 package be.pxl.spring.rest.fallout.quote;
 
-import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
 

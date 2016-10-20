@@ -27,6 +27,7 @@ public class ItemController {
     @RequestMapping(method = RequestMethod.POST)
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity createItem(@RequestBody ItemR newItemR) {
+        logger.log(String.format("Saving new item [%s], currently held by %s", newItemR.getName(), newItemR.getHolder() != null ? newItemR.getHolder() : "nobody"));
         return ResponseEntity.ok(itemRepository.save(new Item(newItemR.getName(), newItemR.getHolder())));
     }
 

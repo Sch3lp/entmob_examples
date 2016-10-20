@@ -67,6 +67,7 @@ hs_err_pid*
 
 # IntelliJ
 /out/
+bin/
 
 # Eclipse
 .classpath
@@ -84,3 +85,6 @@ com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
 fabric.properties
+
+# OSX
+.DS_Store
