@@ -1,6 +1,6 @@
 package be.pxl.spring.rest.fallout.quote;
 
-import org.mockito.internal.util.reflection.Whitebox;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.UUID;
 
@@ -25,7 +25,7 @@ public class QuoteTestBuilder {
         if (id == null){
             id = UUID.randomUUID();
         }
-        Whitebox.setInternalState(quote, "id", id);
+        ReflectionTestUtils.setField(quote, "id", id);
         return quote;
     }
 

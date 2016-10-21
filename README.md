@@ -44,6 +44,11 @@ docker-machine restart default                          # Restart the environmen
 eval "$(/c/DockerTools/docker-machine env default)"     # Or this is if you're on windows
 ```
 
+## ActiveMQ
+To monitor the queues that were started by the ActiveMQ broker, you can navigate to `http://<your vm's ip>:8161/admin`.
+
+You can log in with the default credentials: `admin/admin`.
+
 ## FlyWay
 [FlyWay](http://flywaydb.org/) makes sure your database tables are up to date and uses simple convention over configuration to manage your versioned SQL scripts.
 
@@ -61,3 +66,9 @@ Validate failed. Migration Checksum mismatch for migration 1
 This means you most probably changed a sql file after it was already executed.
 
 Either fix this by running `./gradlew flywayRepair` if you're still testing out your script, or create a new migration script that only has the change necessary.
+
+It can also mean you didn't shut down the docker containers before switching to another branch.
+
+In that case `docker-compose down` to shutdown and remove existing containers.
+
+After you've done that, run `docker-compose up` again to recreate and start the containers from scratch.
